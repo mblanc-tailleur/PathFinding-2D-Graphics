@@ -1,17 +1,13 @@
 #pragma once
-
 #include "Scene.h"
-
-class DummyEntity;
+#include "Pathfinding/Grid.h"
 
 class SampleScene : public Scene
 {
-    DummyEntity* mpEntity1 = nullptr;
-    DummyEntity* mpEntity2 = nullptr;
+    private:
+        Grid grid;
 
-    DummyEntity* mpSelectedEntity = nullptr;
-
-public:
-    void OnInitialize() override;
-    void OnUpdate() override;
+    public:
+        void OnInitialize() override;
+        void OnUpdate() override;
 };
