@@ -1,6 +1,6 @@
 #include <iostream>
 #include <conio.h>
-
+#include "LightEngine/InputManager.h"
 #define NOMINMAX
 #include <windows.h>
 
@@ -47,6 +47,13 @@ class Grid
 public:
 	void Run()
 	{
+        InputManager* input = InputManager::Get();
+
+        if (input->IsKeyDown(SDLK_L))
+        {
+
+        }
+
 		ResetPath();
 
 		while (true) 
