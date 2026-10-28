@@ -68,34 +68,34 @@ i16 Grid::GetValue(v2i16 pos)
 
 void Grid::MakeGrid(f32 wallPercentage)
 {
-    std::uniform_int_distribution<f32> dis(0, 1);
+	std::uniform_int_distribution<f32> dis(0, 1);
 
-    for (i16 a = 0; a < h; a++)
-    {
-        vector<Cell> v;
+	for (i16 a = 0; a < h; a++)
+	{
+		vector<Cell> v;
 
-        for (i16 b = 0; b < w; b++)
-        {
-            Cell c;
-            f32 f = dis(gen);
+		for (i16 b = 0; b < w; b++)
+		{
+			Cell c;
+			f32 f = dis(gen);
 
-            if (f > wallPercentage)
-            {
-                c.val = 0;
-            }
+			if (f > wallPercentage)
+			{
+				c.val = 0;
+			}
 
-            else
-            {
-                c.val = 1;
-            }
+			else
+			{
+				c.val = 1;
+			}
 
-            c.pos = { a, b };
+			c.pos = { a, b };
 
-            v.push_back(c);
-        }
+			v.push_back(c);
+		}
 
-        grid.push_back(v);
-    }
+		grid.push_back(v);
+	}
 }
 
 void Grid::push_back(vector<Cell> newVect)
@@ -105,8 +105,13 @@ void Grid::push_back(vector<Cell> newVect)
 
 void Grid::UpdateInput(InputManager* pInput)
 {
-    if (pInput->IsKeyDown(SDLK_5))
-    {
+	if (pInput->IsKeyDown(SDLK_L))
+	{
+		start = cursor;
+	}
 
-    }
+	else if (pInput->IsKeyDown(SDLK_M))
+	{
+		end = cursor;
+	}
 }
