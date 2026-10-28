@@ -1,0 +1,14 @@
+{
+    "version": 1,
+    "revision": 0,
+    "rules": [
+        {
+            "primary-output": "C:\\Users\\mblanc-tailleur\\Documents\\GitHub\\PathFinding-2D-Graphics\\PathFinding 2D Graphics\\ide\\LightEngine\\x64\\Debug\\intermediate\\InputManager.obj",
+            "outputs": [
+                "C:\\Users\\mblanc-tailleur\\Documents\\GitHub\\PathFinding-2D-Graphics\\PathFinding 2D Graphics\\ide\\LightEngine\\x64\\Debug\\intermediate\\InputManager.cpp.obj.dt.module.json",
+                "C:\\Users\\mblanc-tailleur\\Documents\\GitHub\\PathFinding-2D-Graphics\\PathFinding 2D Graphics\\ide\\LightEngine\\x64\\Debug\\intermediate\\InputManager.cpp.obj.dt.d.json"
+            ],
+            "requires": []
+        }
+    ]
+}
