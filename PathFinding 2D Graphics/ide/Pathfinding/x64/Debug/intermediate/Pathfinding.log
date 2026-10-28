@@ -1,2 +1,0 @@
-﻿  Grid.cpp
-C:\Users\mblanc-tailleur\Documents\GitHub\PathFinding-2D-Graphics\PathFinding 2D Graphics\src\LightEngine\InputManager.h(3,10): fatal  error C1083: Impossible d'ouvrir le fichier include : 'SDL3/SDL_events.h' : No such file or directory
