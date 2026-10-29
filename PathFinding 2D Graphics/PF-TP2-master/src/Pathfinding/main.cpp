@@ -1,11 +1,10 @@
-#include <iostream>
+#include <Windows.h>
+
+#include "Grid.h"
 #include <conio.h>
-#define NOMINMAX
-#include <windows.h>
 
 #define BG_RED "\033[41m"
 #define BG_GREEN "\033[42m"
-#define DEFAULT "\033[0m"
 
 #define ENTER 13
 
@@ -171,13 +170,15 @@ public:
 };
 */
 
+/*
 int main()
 {
 	hidecursor();
 
 	Grid grid;
 
-	grid.Run();
+	grid.MakeGrid();
 
 	return 0;
 }
+*/
