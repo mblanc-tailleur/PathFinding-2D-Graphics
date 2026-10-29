@@ -1,6 +1,5 @@
 #include <iostream>
 #include <conio.h>
-#include "LightEngine/InputManager.h"
 #define NOMINMAX
 #include <windows.h>
 
@@ -34,7 +33,8 @@ void Refresh()
 	gotoxy(0, 0);
 }
 
-class Grid 
+/*
+class Gride 
 {
 	int playerRow = 0;
 	int playerCol = 0;
@@ -47,13 +47,6 @@ class Grid
 public:
 	void Run()
 	{
-        InputManager* input = InputManager::Get();
-
-        if (input->IsKeyDown(SDLK_L))
-        {
-
-        }
-
 		ResetPath();
 
 		while (true) 
@@ -176,6 +169,7 @@ public:
 		system("cls");
 	}
 };
+*/
 
 int main()
 {
