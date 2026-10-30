@@ -1,17 +1,16 @@
 #pragma once
-
 #include "Scene.h"
-
-class DummyEntity;
+#include "Pathfinding/Grid.h"
 
 class SampleScene : public Scene
 {
-    DummyEntity* mpEntity1 = nullptr;
-    DummyEntity* mpEntity2 = nullptr;
+    public:
+        Grid game;
+        Vector2f cellSize;
 
-    DummyEntity* mpSelectedEntity = nullptr;
 
-public:
-    void OnInitialize() override;
-    void OnUpdate() override;
+        void OnInitialize() override;
+        void OnUpdate() override;
+        void DrawGrid();
+        void DrawCell(i16 a, i16 b);
 };

@@ -5,7 +5,7 @@ int main()
 {
     GameManager* game = GameManager::Get();
 
-    game->LaunchScene<SampleScene>(1080, 540, "SampleScene", Color{ 25, 25, 35 });
+    game->LaunchScene<SampleScene>(1080, 540, "SampleScene", Color{ 0, 0, 0 });
 
     return 0;
 }
