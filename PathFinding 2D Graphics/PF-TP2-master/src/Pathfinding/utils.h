@@ -19,6 +19,8 @@ using i8 = char;
 using i16 = short;
 using i32 = int;
 
+using ui32 = unsigned int;
+
 using f32 = float;
 
 class v2i16

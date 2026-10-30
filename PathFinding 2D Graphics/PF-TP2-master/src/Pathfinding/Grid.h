@@ -9,8 +9,8 @@ class Grid
 		i16 w;
 		i16 h;
 
-		f32 wallChance;
-		f32 hillChance;
+		i16 wallChance;
+		i16 hillChance;
 		i16 hillMaxHeight;
 
 		vector<vector<Cell>> grid;
@@ -22,11 +22,14 @@ class Grid
 		void ConsoleDraw();
 		i16 GetValue(v2i16 pos);
 		void push_back(vector<Cell> newVect);
+        void SetCursor(i16 x, i16 y);
+        void MoveCursor(i16 x, i16 y);
 
 		void MakeGrid();
 
 		void BreadthFirstSearch();
 		bool CheckAdjacentCells(i16 x, i16 y, vector<Cell*>* pAdded);
+        void AddCell(vector<Cell*>* pAdded, Cell* pCurrentCell, Cell* pNewCell);
 		bool IsCellInBounds(i16 x, i16 y);
 		bool IsCellInVector(Cell* pCell, vector<Cell*>* pVect);
 

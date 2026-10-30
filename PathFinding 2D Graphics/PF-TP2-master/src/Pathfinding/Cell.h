@@ -11,8 +11,9 @@ class Cell
         i16 hillHeight;
 
         i8 checked;
+        i32 travelTime;
         Cell* previous;
         vector<Cell*> next;
 
-        void AddNext();
+        void AddNext(Cell* newNext);
 };

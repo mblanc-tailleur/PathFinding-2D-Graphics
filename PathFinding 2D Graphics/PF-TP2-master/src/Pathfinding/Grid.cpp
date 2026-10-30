@@ -1,5 +1,5 @@
 #include "Grid.h"
-
+#include <cmath>
 #include <random>
 
 void Grid::ConsoleDraw()
@@ -134,13 +134,24 @@ void Grid::push_back(vector<Cell> newVect)
 	grid.push_back(newVect);
 }
 
+void Grid::SetCursor(i16 x, i16 y)
+{
+	cursor.x = min(max((i16)0, x), w);
+	cursor.y = min(max((i16)0, y), h);
+}
+
+void Grid::MoveCursor(i16 x, i16 y)
+{
+	SetCursor(cursor.x + x, cursor.y + y);
+}
+
 void Grid::MakeGrid()
 {
 	std::random_device rd;
 	std::mt19937 gen(rd());
 
-	std::uniform_int_distribution<f32> dis(0, 1);
-    std::uniform_int_distribution<i16> hillDis(1, hillMaxHeight);
+	std::uniform_int_distribution<i16> dis(1, 1000);
+	std::uniform_int_distribution<i16> hillDis(1, hillMaxHeight);
 
 	for (i16 a = 0; a < w; a++)
 	{
@@ -151,14 +162,14 @@ void Grid::MakeGrid()
 			Cell c;
 			f32 randF = dis(gen);
 
-			if (randF < wallChance)
+			if (randF <= wallChance)
 			{
 				c.val = 1;
 			}
 
 			else 
 			{
-				if ((wallChance < randF) and (randF < (wallChance + hillChance)))
+				if ((wallChance < randF) and (randF <= (wallChance + hillChance)))
 				{
 					c.hillHeight = hillDis(gen);
 				}
@@ -171,9 +182,9 @@ void Grid::MakeGrid()
 				c.val = 0;
 			}
 
-            c.previous = nullptr;
-            c.next = {};
-            c.checked = 0;
+			c.previous = nullptr;
+			c.next = {};
+			c.checked = 0;
 			c.pos = { a, b };
 
 			v.push_back(c);
@@ -185,6 +196,8 @@ void Grid::MakeGrid()
 
 void Grid::BreadthFirstSearch()
 {
+	cursor = start;
+
 	for (i16 b = 0; b < h; b++)
 	{
 		for (i16 a = 0; a < w; a++)
@@ -192,6 +205,7 @@ void Grid::BreadthFirstSearch()
 			grid[a][b].checked = 0;
 			grid[a][b].previous = nullptr;
 			grid[a][b].next = {};
+			grid[a][b].travelTime = -1;
 		}
 	}
 
@@ -202,35 +216,51 @@ void Grid::BreadthFirstSearch()
 
 	i16 step = 1;
 
+    grid[start.x][start.y].travelTime = 0;
+
 	bool keepGoing1 = true;
 
 	while (keepGoing1 == true)
 	{
 		Cell* act = added[0];
 
+        i16 posInVector = 0;
+
+		for (i16 i = 0; i < added.size(); i++)
+		{
+			if (added[i]->travelTime < act->travelTime)
+			{
+				act = added[i];
+                posInVector = i;
+			}
+		}
+
 		if (CheckAdjacentCells(i16(act->pos.x - step), act->pos.y, pAdded) == true)
 		{
-			act->AddNext();
-			added.push_back(&grid[i16(act->pos.x - step)][act->pos.y]);
-			act->next.push_back(&grid[i16(act->pos.x - step)][act->pos.y]);
+			Cell* left = &grid[act->pos.x - step][act->pos.y];
+
+			AddCell(pAdded, act, left);
 		}
 
 		if (CheckAdjacentCells(i16(act->pos.x + step), act->pos.y, pAdded) == true)
 		{
-			added.push_back(&grid[i16(act->pos.x + step)][act->pos.y]);
-			act->next.push_back(&grid[i16(act->pos.x + step)][act->pos.y]);
+            Cell* right = &grid[act->pos.x + step][act->pos.y];
+
+            AddCell(pAdded, act, right);
 		}
 
 		if (CheckAdjacentCells(act->pos.x, i16(act->pos.y - step), pAdded) == true)
 		{
-			added.push_back(&grid[act->pos.x][i16(act->pos.y - step)]);
-			act->next.push_back(&grid[act->pos.x][i16(act->pos.y - step)]);
+            Cell* up = &grid[act->pos.x][act->pos.y - step];
+
+            AddCell(pAdded, act, up);
 		}
 
 		if (CheckAdjacentCells(act->pos.x, i16(act->pos.y + step), pAdded) == true)
 		{
-			added.push_back(&grid[act->pos.x][i16(act->pos.y + step)]);
-			act->next.push_back(&grid[act->pos.x][i16(act->pos.y + step)]);
+            Cell* down = &grid[act->pos.x][act->pos.y + step];
+
+            AddCell(pAdded, act, down);
 		}
 
 		for (i16 k = 0; k < act->next.size(); k++)
@@ -269,7 +299,7 @@ void Grid::BreadthFirstSearch()
 		else
 		{
 			act->checked = 1;
-			added.erase(added.begin());
+			added.erase(added.begin() + posInVector);
 		}
 
 		if (added.size() < 1)
@@ -278,6 +308,19 @@ void Grid::BreadthFirstSearch()
 			break;
 		}
 	}
+}
+
+void Grid::AddCell(vector<Cell*>* pAdded, Cell* pCurrentCell, Cell* pNewCell)
+{
+	ui32 newTime = pCurrentCell->travelTime + pNewCell->hillHeight + 1;
+
+	if (newTime < pNewCell->travelTime)
+	{
+		pNewCell->travelTime = newTime;
+	}
+
+	pAdded->push_back(pNewCell);
+	pCurrentCell->AddNext(pNewCell);
 }
 
 bool Grid::CheckAdjacentCells(i16 x, i16 y, vector<Cell*>* pAdded)
